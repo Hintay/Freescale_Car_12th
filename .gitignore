@@ -1,0 +1,16 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+settings/
+FN15_Debug/
+FN15_Release/
+FN15_Release/
+FN15_Release/
+DZ10_Debug/
+DZ10_Release/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
