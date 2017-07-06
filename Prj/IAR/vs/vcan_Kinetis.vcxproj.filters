@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<Filter Include="源文件\App">
+			<UniqueIdentifier>{515f5d1a-70d7-4886-579d-e473389150c3}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="源文件\Board">
+			<UniqueIdentifier>{79aa2f2d-9b22-4227-73ea-b1b8b714e2a7}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="源文件\Chip">
+			<UniqueIdentifier>{3dc82e8c-9027-48f2-4545-4454e3e93937}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="源文件\LIB">
+			<UniqueIdentifier>{20eea622-88b9-4c0f-5c35-9d232ebe131d}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="源文件\LIB\CMSIS">
+			<UniqueIdentifier>{e1ed38a4-0704-413a-5edd-307b05cca07d}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="源文件\LIB\FatFs">
+			<UniqueIdentifier>{dd0d2d2c-c895-432c-5b4e-d10df189a185}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="源文件\LIB\USB">
+			<UniqueIdentifier>{46fffa03-6858-4983-6e51-926cee1c1eb6}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="源文件">
+			<UniqueIdentifier>{dd0ef83c-4d0f-4e26-5a42-51fc2109befb}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="..\..\..\App\DialSwitch.c">
+			<Filter>源文件\App</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\App\findtrack.c">
+			<Filter>源文件\App</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\App\LcdDisplay.c">
+			<Filter>源文件\App</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\App\main.c">
+			<Filter>源文件\App</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\App\MK60_conf.c">
+			<Filter>源文件\App</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\App\MK60_it.c">
+			<Filter>源文件\App</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\App\motor.c">
+			<Filter>源文件\App</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\App\steer.c">
+			<Filter>源文件\App</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\App\Test.c">
+			<Filter>源文件\App</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\App\TrackType.c">
+			<Filter>源文件\App</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_LCD.c">
+			<Filter>源文件\App</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_ASCII.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_BMP.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_camera.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_computer.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\vcan_img2sd.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_key.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_key_event.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_LCD_CH.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_LCD_ILI9341.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_LCD_ST7735R.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_LCD_ST7735S.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_MMA7455.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_NRF24L0.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_NRF24L0_MSG.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_OV7725_Eagle.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_OV7725_Wolf.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_SCCB.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\vcan_sd_app.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\Vcan_touch.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_TSL1401.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Board\src\VCAN_UI_VAR.c">
+			<Filter>源文件\Board</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\misc.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_adc.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_can.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_dac.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_dma.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_DWT.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_flash.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_flexbus.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_ftm.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_gpio.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_i2c.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_lptmr.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_mcg.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_PIT.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_port.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_rtc.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_sdhc.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_spi.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_SysTick.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_uart.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_usb.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\MK60_wdog.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\IAR\system_MK60DZ10.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Chip\src\vectors.c">
+			<Filter>源文件\Chip</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Lib\FatFs\diskio.c">
+			<Filter>源文件\LIB\FatFs</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Lib\FatFs\ff.c">
+			<Filter>源文件\LIB\FatFs</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Lib\USB\USB.c">
+			<Filter>源文件\LIB\USB</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\Lib\USB\USB_CDC.c">
+			<Filter>源文件\LIB\USB</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="..\..\..\App\DialSwitch.h">
+			<Filter>源文件\App</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\App\Inc\findtrack.h">
+			<Filter>源文件\App</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\App\LcdDisplay.h">
+			<Filter>源文件\App</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\App\Inc\MK60_conf.h">
+			<Filter>源文件\App</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\App\Inc\MK60_it.h">
+			<Filter>源文件\App</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\App\Inc\motor.h">
+			<Filter>源文件\App</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\App\Inc\PORT_cfg.h">
+			<Filter>源文件\App</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\App\Inc\steer.h">
+			<Filter>源文件\App</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\App\Inc\Test.h">
+			<Filter>源文件\App</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\App\TrackType.h">
+			<Filter>源文件\App</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\Chip\inc\common.h">
+			<Filter>源文件\Chip</Filter>
+		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\..\Board\src\VCAN_LED.C">
+			<Filter>源文件\Board</Filter>
+		</None>
+		<None Include="..\..\..\Board\src\VCAN_RTC_count.C">
+			<Filter>源文件\Board</Filter>
+		</None>
+		<None Include="..\..\..\Chip\src\IAR\startup_MK60DZ10.s">
+			<Filter>源文件\Chip</Filter>
+		</None>
+	</ItemGroup>
+</Project>

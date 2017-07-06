@@ -4,23 +4,23 @@
 
 /*********define for SteerControl**********/
 
-float KP=0.0;//舵机方向比例系数，影响舵机的打角范围
-float KD=0.0;//10//7.5//舵机方向微分系数,影响舵机的打角反应
-float SteerPwmAdd=0.0;//舵机pwm增量
+float KP = 0.0;//舵机方向比例系数，影响舵机的打角范围
+float KD = 0.0;//10//7.5//舵机方向微分系数,影响舵机的打角反应
+float SteerPwmAdd = 0.0;//舵机pwm增量
 float Error;//偏差值
 float LastError;//上次的偏差
-float WeightSum=0;
-float CenterMeanValue=0;
-float CenterSum=0;
-float J=0.0300;//调节p和偏差的关系，越大，作用越强
-float JD=0.0200;//调节p和偏差的关系，越大，作用越强
-float BasicP=2.0;//2.5 //基本的P值
-float BasicD=6.0;//6.5 //基本的P值
-uint32 SteerPwm=0,LastSteerSwm=0;//舵机的pwm值和上次舵机的pwm值
+float WeightSum = 0;
+float CenterMeanValue = 0;
+float CenterSum = 0;
+float J = 0.0300;//调节p和偏差的关系，越大，作用越强
+float JD = 0.0200;//调节p和偏差的关系，越大，作用越强
+float BasicP = 2.5;//2.5 //基本的P值
+float BasicD = 6.5;//6.5 //基本的P值
+uint32 SteerPwm = 0, LastSteerSwm = 0;//舵机的pwm值和上次舵机的pwm值
 
 //加权平均，权值的选取
- #if 0
-float Weight[60]={
+#if 0
+float Weight[60] = {
 	0,0,0,0,0,0,0,0,0,0,						//0-9行，基本用不到
 	0,0,0,0,0,0,2,2,2,2,						//0-19行，基本用不到
 
@@ -36,7 +36,7 @@ float Weight[60]={
 #endif
 
 #if 1
-float Weight[60]={
+float Weight[60] = {
 	0,0,0,0,0,0,0,0,0,0,		//0-9行，基本用不到
 
 	2,2,2,2,2,1.5,1,1.5,1,		//0-19行，基本用不到
@@ -54,39 +54,39 @@ float Weight[60]={
 
 
 
-/****************************************************** 
+/******************************************************
  *函数名：SteerInit
  *
  *功能：舵机初始化
- * 
+ *
  * 入口参数：无
- * 
+ *
  *返回参数：无
  *
  * 作者：XGL
- * 
+ *
  * 日期：2016-3-01(已测试)
  *******************************************************/
 
 
 void SteerInit(void)//舵机初始化
 {
-	ftm_pwm_init(FTM1, FTM_CH0,50, SteerMidle);
+	ftm_pwm_init(FTM1, FTM_CH0, 50, SteerMidle);
 }
 
 
 #if 1
-/****************************************************** 
+/******************************************************
  *函数名：CalculateError
  *
  *功能：计算误差
- * 
+ *
  * 入口参数：无
- * 
+ *
  *返回参数：无
  *
  * 作者：XGL
- * 
+ *
  * 日期：2016-3-01(已测试)
  *******************************************************/
 
@@ -94,111 +94,111 @@ void SteerInit(void)//舵机初始化
 void CalculateError(void)
 {
 	int i;
-	CenterSum=0;
-	CenterMeanValue=0;
-	WeightSum=0; 
-	if(Cross.LeftSideling) 
+	CenterSum = 0;
+	CenterMeanValue = 0;
+	WeightSum = 0;
+	if (Cross.LeftSideling)
 	{
-		for(i=58;i>InflectionPointL.InflectionPointRow;i--)
+		for (i = 58; i > InflectionPointL.InflectionPointRow; i--)
 		{
-			CenterSum+=MiddleLine[i]*Weight[i];
-			WeightSum+=Weight[i];
+			CenterSum += MiddleLine[i] * Weight[i];
+			WeightSum += Weight[i];
 		}
 	}
-	else if(Cross.RightSideling)
+	else if (Cross.RightSideling)
 	{
-		for(i=58;i>InflectionPointR.InflectionPointRow;i--)
+		for (i = 58; i > InflectionPointR.InflectionPointRow; i--)
 		{
-			CenterSum+=MiddleLine[i]*Weight[i];
-			WeightSum+=Weight[i];
+			CenterSum += MiddleLine[i] * Weight[i];
+			WeightSum += Weight[i];
 		}
 	}
-	else if(StrightIntoCrossL)
+	else if (StrightIntoCrossL)
 	{
-		for(i=58;i>InflectionPointL.InflectionPointRow;i--)
+		for (i = 58; i > InflectionPointL.InflectionPointRow; i--)
 		{
-			CenterSum+=MiddleLine[i]*Weight[i];
-			WeightSum+=Weight[i];
+			CenterSum += MiddleLine[i] * Weight[i];
+			WeightSum += Weight[i];
 		}
 	}
-	else if(StrightIntoCrossR)
+	else if (StrightIntoCrossR)
 	{
-		for(i=58;i>InflectionPointR.InflectionPointRow;i--)
+		for (i = 58; i > InflectionPointR.InflectionPointRow; i--)
 		{
-			CenterSum+=MiddleLine[i]*Weight[i];
-			WeightSum+=Weight[i];
+			CenterSum += MiddleLine[i] * Weight[i];
+			WeightSum += Weight[i];
 		}
 	}
-	else if(StrightIntoCrossLR)
+	else if (StrightIntoCrossLR)
 	{
-		for(i=58;i>(InflectionPointR.InflectionPointRow+InflectionPointR.InflectionPointRow)/2;i--)
+		for (i = 58; i > (InflectionPointR.InflectionPointRow + InflectionPointR.InflectionPointRow) / 2; i--)
 		{
-			CenterSum+=MiddleLine[i]*Weight[i];
-			WeightSum+=Weight[i];
+			CenterSum += MiddleLine[i] * Weight[i];
+			WeightSum += Weight[i];
 		}
 	}
 	//else if(StrightIntoCrossNotLR)
 	//{
 		// for()
 	//}
-	else if(Cross.CrossFlag)
+	else if (Cross.CrossFlag)
 	{
-		for(i=45;i>LastLine;i--)
+		for (i = 45; i > LastLine; i--)
 		{
-			CenterSum+=MiddleLine[i]*Weight[i];
-			WeightSum+=Weight[i];
+			CenterSum += MiddleLine[i] * Weight[i];
+			WeightSum += Weight[i];
 		}
-	
+
 	}
 	else
 	{
-		for(i=57;i>LastLine;i--)
-		
+		for (i = 57; i > LastLine; i--)
+
 		{
-			CenterSum+=MiddleLine[i]*Weight[i];
-			
-			WeightSum+=Weight[i];
+			CenterSum += MiddleLine[i] * Weight[i];
+
+			WeightSum += Weight[i];
 		}
 	}
 
-	if(WeightSum!=0)
+	if (WeightSum != 0)
 	{
-		CenterMeanValue=(CenterSum/WeightSum);//算出加权平均后中线的值
+		CenterMeanValue = (CenterSum / WeightSum);//算出加权平均后中线的值
 	}
 
-	LastError=Error;
+	LastError = Error;
 
-	Error=(40-CenterMeanValue);// 一场图像偏差值 
+	Error = (40 - CenterMeanValue);// 一场图像偏差值 
 
-	if(Error>=30.0)//偏差限幅
-		Error=30.0;
+	if (Error >= 30.0)//偏差限幅
+		Error = 30.0;
 
-	if(Error<=-30.0)
-		Error=-30.0; 
+	if (Error <= -30.0)
+		Error = -30.0;
 
-	KP=BasicP+(Error* Error)*J;//动态二次p模型
+	KP = BasicP + (Error* Error)*J;//动态二次p模型
 
-	if(KP>=13) KP=13;//p值限幅
-		 KD=BasicD+(Error* Error)*JD;
+	if (KP >= 13) KP = 13;//p值限幅
+	KD = BasicD + (Error* Error)*JD;
 
-	if(KD>=20) KD=20;//p值限幅
+	if (KD >= 20) KD = 20;//p值限幅
 }
 
 #endif
 
 
 
-/****************************************************** 
+/******************************************************
  *函数名：SteerControl
  *
  *功能：舵机控制
- * 
+ *
  * 入口参数：无
- * 
+ *
  *返回参数：无
  *
  * 作者：XGL
- * 
+ *
  * 日期：2016-3-01(已测试)
  *******************************************************/
 
@@ -206,25 +206,25 @@ void CalculateError(void)
 
 void SteerControl(void)
 {
-	CalculateError(); 
+	CalculateError();
 
-	SteerPwmAdd=(KP*Error)+KD*(Error-LastError);//舵机的pd控制器
+	SteerPwmAdd = (KP*Error) + KD*(Error - LastError);//舵机的pd控制器
 
-	if(SteerPwmAdd>=120)//120
-		SteerPwmAdd=120;//120
+	if (SteerPwmAdd >= 120)//120
+		SteerPwmAdd = 120;//120
 
-	if(SteerPwmAdd<=-120)//-120
-		SteerPwmAdd=-120;//-120
+	if (SteerPwmAdd <= -120)//-120
+		SteerPwmAdd = -120;//-120
 
-	SteerPwm=(uint32)(SteerPwmAdd+SteerMidle);
+	SteerPwm = (uint32)(SteerPwmAdd + SteerMidle);
 
-	if(SteerPwm>=SteerMax)//限幅
-		SteerPwm=SteerMax;
+	if (SteerPwm >= SteerMax)//限幅
+		SteerPwm = SteerMax;
 
-	if(SteerPwm<=SteerMin)
-		SteerPwm=SteerMin;
+	if (SteerPwm <= SteerMin)
+		SteerPwm = SteerMin;
 
-	ftm_pwm_duty(FTM1,FTM_CH0,SteerPwm);//舵机pwm更新
+	ftm_pwm_duty(FTM1, FTM_CH0, SteerPwm);//舵机pwm更新
 
-	LastSteerSwm=SteerPwm;//记录pwm值
+	LastSteerSwm = SteerPwm;//记录pwm值
 }

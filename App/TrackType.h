@@ -15,7 +15,11 @@ extern unsigned char StrightIntoCrossL;//直入十字，存在左拐点的标志位
 extern unsigned char StrightIntoCrossR;//直入十字，存在右拐点的标志
 extern unsigned char StrightIntoCrossLR;//直入十字，存在左右拐点的标志位
 extern unsigned char StrightIntoCrossNotLR;//直入十字，不存在右拐点的标志位
+extern unsigned char ObstacleLfetOkFlag;
+extern unsigned char ObstacleRightOkFlag;
 #endif
+
+extern int IsStartLine;
 
 
 typedef struct 

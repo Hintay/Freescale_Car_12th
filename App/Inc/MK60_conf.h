@@ -35,7 +35,7 @@
 /*
  * 选择是否输出调试信息，不输出则注释下面的宏定义
  */
-//#define DEBUG_PRINT
+#define DEBUG_PRINT
 
 /*
  * 定义晶振时钟，单位为MHz
