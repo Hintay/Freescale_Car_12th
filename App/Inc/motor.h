@@ -19,8 +19,8 @@ extern  int32 GetLeftMotorPules;
 extern  float OutData[4];
 extern  float Error;
 extern  float AvaliableLines;
-extern  int   BlackEndM ; 
-extern  int   MiddleLine[RowMax+1];//中线
+extern  int   BlackEndM;
+extern  int   MiddleLine[RowMax + 1];//中线
 extern  int   BlackEndMR;
 extern  int   BlackEndML;
 extern float  SteerPwmAdd;
@@ -30,7 +30,7 @@ extern  int32 SpeedSet;
 
 
 extern void MotorInit(void);
-void CalculateMotorSpeedError(float LeftMotorTarget,float RightMotorTarget);
+void CalculateMotorSpeedError(float LeftMotorTarget, float RightMotorTarget);
 
 void MotorControlOpenLoop(void);
 extern void MotorControl(void);

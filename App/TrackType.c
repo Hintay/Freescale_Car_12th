@@ -1404,15 +1404,3 @@ void ObstacleRepair()
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-

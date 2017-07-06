@@ -17,44 +17,44 @@
 #ifndef __MK60_CONF_H__
 #define __MK60_CONF_H__
 
-/*
- * 定义平台[放在工程选项里定义]
- */
-//#define MK60DZ10
-//#define MK60F15
+ /*
+  * 定义平台[放在工程选项里定义]
+  */
+  //#define MK60DZ10
+  //#define MK60F15
 
-/*
- * 定义LCD型号
- */
+  /*
+   * 定义LCD型号
+   */
 #define LCD_ILI9341     1
 #define LCD_ST7735S     2       //LCD_ST7735S 与 LCD_ST7735R 外观一样，寄存器操作略有不同
 #define LCD_ST7735R     3       //
 
 #define USE_LCD        LCD_ST7735S             //选择使用的 LCD
 
-/*
- * 选择是否输出调试信息，不输出则注释下面的宏定义
- */
+   /*
+	* 选择是否输出调试信息，不输出则注释下面的宏定义
+	*/
 #define DEBUG_PRINT
 
-/*
- * 定义晶振时钟，单位为MHz
- */
+	/*
+	 * 定义晶振时钟，单位为MHz
+	 */
 #define EXTAL_IN_MHz            (50)
 
-/*
- * 定义 PLL 超频 频率 (不同的平台，有不同的超频配置)
- *
- * 如果对超频配置不熟悉，可以看如下帖子:
- * K60 KL26 主频和总线频率的关系 - 智能车资料区 - 山外论坛
- * http://www.vcan123.com/forum.php?mod=viewthread&tid=81&page=1&extra=#pid419
- */
+	 /*
+	  * 定义 PLL 超频 频率 (不同的平台，有不同的超频配置)
+	  *
+	  * 如果对超频配置不熟悉，可以看如下帖子:
+	  * K60 KL26 主频和总线频率的关系 - 智能车资料区 - 山外论坛
+	  * http://www.vcan123.com/forum.php?mod=viewthread&tid=81&page=1&extra=#pid419
+	  */
 #if defined(MK60DZ10)			//以下为 MK60DZ10 的超频配置
-/*
- * 定义 PLL 超频 频率
- */
+	  /*
+	   * 定义 PLL 超频 频率
+	   */
 #define CORE_CLK                PLL180      // 从 PLL_e 里选择 已提供的 配置方案
-                                            // bus 、 flex bus 、 flash 频率 都是 core 整数倍分频而来
+	   // bus 、 flex bus 、 flash 频率 都是 core 整数倍分频而来
 #define MAX_BUS_CLK             90         // bus      (bus        >= core/16  )
 #define MAX_FLEXBUS_CLK         25          // flex bus (flex bus   >= core/16  )
 #define MAX_FLASH_CLK           25          // flash    (flash      >= core/16  )
@@ -62,7 +62,7 @@
 #elif defined(MK60F15)			//以下为 MK60F15 的超频配置
 
 #define CORE_CLK                PLL200      // 从 PLL_e 里选择 已提供的 配置方案
-                                            // bus 、 flex bus 、 flash 频率 都是 core 整数倍分频而来
+	  // bus 、 flex bus 、 flash 频率 都是 core 整数倍分频而来
 #define MAX_BUS_CLK             100         // bus      (bus        >= core/16  )
 #define MAX_FLEXBUS_CLK         50          // flex bus (flex bus   >= core/16  )
 #define MAX_FLASH_CLK           25          // flash    (flash      >= core/16  )
@@ -86,9 +86,9 @@
 #define VCAN_PORT           UART4
 #define VCAN_BAUD           9600
 
-/*
- * 配置延时函数
- */
+ /*
+  * 配置延时函数
+  */
 #if 0
 #include "MK60_DWT.h"                       //有可能不稳定
 #define DELAY()         dwt_delay_ms(500)
@@ -112,9 +112,9 @@
 #endif
 
 
-/*
- * 配置断言和其实现函数
- */
+  /*
+   * 配置断言和其实现函数
+   */
 void assert_failed(char *, int);
 
 #if defined( DEBUG )
