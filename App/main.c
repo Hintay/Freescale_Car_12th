@@ -79,7 +79,6 @@ void  main(void)
 {
 
 	HardWare_Init();
-	uart_init(UART4, 9600);
 	// 盲跑
 	ftm_pwm_duty(FTM0, FTM_CH0, 400);//右电机
 	ftm_pwm_duty(FTM0, FTM_CH1, 400); //左电机

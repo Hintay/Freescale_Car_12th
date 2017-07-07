@@ -32,8 +32,7 @@ int   LeftLoseStart = 0;//记录左边丢线的开始行
 int   RightLoseStart = 0;//记录右边边丢线的开始行
 int   WhiteStart = 0;
 
-
-float OverflowOffset = 0.4;//溢出补偿系数,如果当前行的某一个边已经被白色淹没,则检测白色淹没程度来对中线进行偏移
+//float OverflowOffset = 0.4;//溢出补偿系数,如果当前行的某一个边已经被白色淹没,则检测白色淹没程度来对中线进行偏移
 
 /*********define for GetBlackEndParam**********/
 int BlackEndMR = 0;
@@ -70,7 +69,7 @@ void SetInitVal()
 
 //获取从指定点向上到达黑色区域的距离
 
-int16  GetWhiteHight(int16 H, int16 W)
+/*int16  GetWhiteHight(int16 H, int16 W)
 {
 	int16 tmp = H;
 	while (tmp > 0 && img[tmp][W] == White_Point)//如果tmp还没到画面最远端,且目前检查的像素点还是白色
@@ -83,7 +82,7 @@ int16  GetWhiteHight(int16 H, int16 W)
 	}
 	return 0;
 
-}
+}*/
 
 
 //全行扫描和边缘结合提取赛道的中线

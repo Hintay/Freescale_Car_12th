@@ -6,7 +6,7 @@ Site_t site = { 0, 0 };      //显示图像左上角位置
 Size_t imgsize = { CAMERA_W, CAMERA_H };     //图像大小
 Size_t size;                   //显示区域图像大小   
 
-int aac_tmp = 0;
+
 
 void LCD_Init()
 {
@@ -27,28 +27,28 @@ void LCDDisplay(void)
 	uint32 a, i;
 	Site_t site_point = { 0,0 };
 
-	site.y = 126 - CAMERA_H;    //显示图像左上角位置的y轴
-	site.x = 126 - CAMERA_W;
+   site.y =127-CAMERA_H;    //显示图像左上角位置的y轴
+   site.x =127-CAMERA_W;
 	LCD_Img_Binary_Z(site, size, imgbuff, imgsize);//黑白摄像头（显示图像左上角位置，显示区域图像大小，定义存储接收图像的数组，图像大小）
 
 	//画边线和中心线
 	for (i = CAMERA_H - 1; i > 2; i--)
 	{
-		site_point.y = i + 126 - CAMERA_H;
+        site_point.y=i+127-CAMERA_H;
 		//右线
 		if (RightEdge[i] > 79)RightEdge[i] = 79;
 		if (RightEdge[i] < 0)RightEdge[i] = 0;
-		site_point.x = RightEdge[i] + 126 - CAMERA_W - 2;      /////LeftEedg   rightEedg
+        site_point.x=RightEdge[i]+127-CAMERA_W-2;      /////LeftEedg   rightEedg
 		LCD_point(site_point, BRED);
 
 		//左线
 		if (LeftEdge[i] > 79)LeftEdge[i] = 79;
 		if (LeftEdge[i] < 0)LeftEdge[i] = 0;
-		site_point.x = LeftEdge[i] + 126 - CAMERA_W + 2;
+        site_point.x=LeftEdge[i]+127-CAMERA_W+2;
 		LCD_point(site_point, BLUE);
 
 		//路径中线
-		site_point.x = MiddleLine[i] + 126 - CAMERA_W;
+        site_point.x=MiddleLine[i]+127-CAMERA_W;
 		if (BlackAreaCountRow[i])
 		{
 			LCD_point(site_point, BLUE);
@@ -60,7 +60,7 @@ void LCDDisplay(void)
 		else
 			LCD_point(site_point, RED);
 		//镜头中心
-		//site_point.x=40+126-CAMERA_W;
+		//site_point.x=40+127-CAMERA_W;
 		//LCD_point(site_point,YELLOW);
 
 	}

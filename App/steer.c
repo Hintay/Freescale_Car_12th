@@ -13,8 +13,8 @@ float WeightSum = 0;
 float CenterMeanValue = 0;
 float CenterSum = 0;
 float J = 0.0300;//调节p和偏差的关系，越大，作用越强
-float JD = 0.0200;//调节p和偏差的关系，越大，作用越强
-float BasicP = 2.5;//2.5 //基本的P值
+float  JD=0.0400;//调节p和偏差的关系，越大，作用越强
+float  BasicP=3; //基本的P值
 float BasicD = 6.5;//6.5 //基本的P值
 uint32 SteerPwm = 0, LastSteerSwm = 0;//舵机的pwm值和上次舵机的pwm值
 

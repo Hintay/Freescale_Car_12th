@@ -143,17 +143,17 @@ void GetTargetSpeed(void)
 
 		if (Loop.StrightIntoLoop)
 		{
-			SpeedSet = 70;//50;
+			SpeedSet = 80;
 		}
 
 		else if (Tracktype.LongStraightaway)
 		{
-			SpeedSet = 80;//70;
+			SpeedSet = 100;
 		}
 
 		else if (Tracktype.ShortStraightaway&&Tracktype.LongStraightawayIntoBend == 0)
 		{
-			SpeedSet = 50;//50;
+			SpeedSet = 70;
 		}
 
 		else if (Tracktype.ShortStraightaway&&Tracktype.LongStraightawayIntoBend)
@@ -164,10 +164,10 @@ void GetTargetSpeed(void)
 
 		else
 		{
-			SpeedSet = 40;//50;
+			SpeedSet = 80;
 		}
 
-		if (SlowSpeed == 1)
+		if (SlowSpeed)
 		{
 			SpeedSet = 40;//45;
 
@@ -181,13 +181,13 @@ void GetTargetSpeed(void)
 		}
 		if (ABS(Error) >= 10) //偏差大于某个值才进行差速
 		{
-			Differential_P = 0.058; //(float)(30.0/((60-(LastLine+4))*(60-(LastLine+4))));//30
+			Differential_P = 0.038;//(float)(30.0/((60-(LastLine+4))*(60-(LastLine+4))));//30
 			LSpeedSet = (int32)(SpeedSet - (Differential_P*Error*SpeedSet));//左轮差速
-			if (LSpeedSet <= 40)    LSpeedSet = 40;
-			if (LSpeedSet >= 350)  LSpeedSet = 350;
+			if (LSpeedSet <= 20)    LSpeedSet = 20;
+			if (LSpeedSet >= 150)  LSpeedSet = 150;
 			RSpeedSet = (int32)(SpeedSet + (Differential_P*Error*SpeedSet));//右轮差速
-			if (RSpeedSet <= 40)    RSpeedSet = 40;
-			if (RSpeedSet >= 350)  RSpeedSet = 350;
+			if (RSpeedSet <= 20)    RSpeedSet = 20;
+			if (RSpeedSet >= 150)  RSpeedSet = 150;
 		}
 		else
 		{
@@ -199,7 +199,7 @@ void GetTargetSpeed(void)
 
 	else if (!DialSwitch_2)//二号拨码开关往上波
 	{
-		SpeedP = 15.0;//50.0;40
+		SpeedP = 16.0;//50.0;40
 		SpeedI = 0.0006;//16.0;50,0.0006
 		SpeedD = 0.0;//1.3,10.0
 
@@ -210,7 +210,7 @@ void GetTargetSpeed(void)
 		}
 		else
 		{
-			SpeedSet = 50;
+			SpeedSet = 65;
 
 		}
 
@@ -219,13 +219,13 @@ void GetTargetSpeed(void)
 			//Differential_P=(float)(30.0/((60-(AvaliableLines+10))*(60-(AvaliableLines+10))));
 			 //SpeedSet=50;
 
-			Differential_P = 0.0380;//调差速，调太大会跳轮
+			Differential_P = 0.028;//调差速，调太大会跳轮
 			LSpeedSet = (int32)(SpeedSet - (Differential_P*Error*SpeedSet));//左轮差速
-			if (LSpeedSet <= 40)    LSpeedSet = 40;
-			if (LSpeedSet >= 350)  LSpeedSet = 350;
+			if (LSpeedSet <= 10)    LSpeedSet = 10;
+			if (LSpeedSet >= 150)  LSpeedSet = 150;
 			RSpeedSet = (int32)(SpeedSet + (Differential_P*Error*SpeedSet));//右轮差速
-			if (RSpeedSet <= 40)    RSpeedSet = 40;
-			if (RSpeedSet >= 350)  RSpeedSet = 350;
+			if (RSpeedSet <= 10)    RSpeedSet = 10;
+			if (RSpeedSet >= 150)  RSpeedSet = 150;
 		}
 		else
 		{

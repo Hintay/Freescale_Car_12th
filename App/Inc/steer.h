@@ -17,9 +17,9 @@
 
 #if 1
 
-#define SteerMax 780     //舵机最大值
-#define SteerMin  620  //舵机中值
-#define SteerMidle 700  //舵机最小值
+#define SteerMax 795     //舵机最大值
+#define SteerMin  615  //舵机最小值
+#define SteerMidle 710  //舵机中值
 
 #endif
 
