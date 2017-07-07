@@ -135,7 +135,7 @@ void GetTargetSpeed(void)
 
 	static int Num = 0;
 
-	if (DialSwitch_2)//二号拨码开关往上波
+	if (DialSwitch_2)//二号拨码开关往上拨
 	{
 		SpeedP = 16.0;//50.0;40
 		SpeedI = 0.0006;//16.0;50,0.0006
@@ -197,7 +197,7 @@ void GetTargetSpeed(void)
 
 	}
 
-	else if (!DialSwitch_2)//二号拨码开关往上波
+	else if (!DialSwitch_2)//二号拨码开关往下拨
 	{
 		SpeedP = 16.0;//50.0;40
 		SpeedI = 0.0006;//16.0;50,0.0006

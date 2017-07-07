@@ -79,10 +79,12 @@ void  main(void)
 {
 
 	HardWare_Init();
-	// 盲跑
-	ftm_pwm_duty(FTM0, FTM_CH0, 400);//右电机
-	ftm_pwm_duty(FTM0, FTM_CH1, 400); //左电机
-	DELAY_MS(500);//延时500ms
+	if (DialSwitch_4)
+	{ // 盲跑
+		ftm_pwm_duty(FTM0, FTM_CH0, 400);//右电机
+		ftm_pwm_duty(FTM0, FTM_CH1, 400); //左电机
+		DELAY_MS(500);//延时500ms
+	}
 	//int8_t osc_array[4];
 	while (1)
 	{

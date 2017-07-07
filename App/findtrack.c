@@ -21,6 +21,7 @@ int   Width[RowMax + 1];//={2,3,3,3,4,4,5,5,6,6,
 					   //41,41,43,43,45,45,47,47,49,50,
 					   //50,51,52,54,55,56,57,58,59,60,61};  // Width[i]  = 20+i*3/4;     //动态路宽
 int  BlackAreaCountRow[RowMax + 1];
+int  EndLineFlagCount = 0;
 
 int   MidPri = 40;
 int   LastLine = 0;
@@ -291,8 +292,8 @@ void SearchCenterBlackline(void)
 		BlackAreaCount = 0;
 		if (LeftEdge[i + 1] != 0 && RightEdge[i + 1] != ColumnMax) //上一行两边都找到 启用边沿扫描     
 		{
-			j = ((LeftEdge[i + 1] + 10) >= ColumnMax - 2) ? ColumnMax - 2 : (LeftEdge[i + 1] + 10);//先找左边界    
-			jj = ((LeftEdge[i + 1] - 5) <= 1) ? 1 : (LeftEdge[i + 1] - 5);
+			j = ((LeftEdge[i + 1] + 15) >= ColumnMax - 2) ? ColumnMax - 2 : (LeftEdge[i + 1] + 15);//先找左边界    
+			jj = ((LeftEdge[i + 1] - 10) <= 1) ? 1 : (LeftEdge[i + 1] - 10);
 			IsBlackArea = 0;
 			EdgeRequirementCnt = 0;//计数清零
 			while (j >= jj)//正常情况下(没有过于接近某一图像边缘),就从上一行左边界的右边10个的位置找到左边5个的位置之间寻找    
@@ -328,8 +329,8 @@ void SearchCenterBlackline(void)
 
 				j--;
 			}
-			j = ((RightEdge[i + 1] - 10) <= 1) ? 1 : (RightEdge[i + 1] - 10); //在找右边界   
-			jj = ((RightEdge[i + 1] + 5) >= ColumnMax - 2) ? ColumnMax - 2 : (RightEdge[i + 1] + 5);
+			j = ((RightEdge[i + 1] - 15) <= 1) ? 1 : (RightEdge[i + 1] - 15); //在找右边界   
+			jj = ((RightEdge[i + 1] + 10) >= ColumnMax - 2) ? ColumnMax - 2 : (RightEdge[i + 1] + 10);
 			EdgeRequirementCnt = 0;//计数清零
 			while (j <= jj)
 			{
@@ -561,8 +562,23 @@ void SearchCenterBlackline(void)
 
 	ConvertStartLine();
 
-	if (EndLineEnableFlag && BlackAreaCountRow[RowMax - 10])
-		EndLineFlag = 1;
+	if (EndLineEnableFlag && !EndLineFlag)
+	{
+		int EndLineThisTime = 0;
+		if (EndLineFlagCount >= 4)
+			EndLineFlag = 1;
+		for (i = 15; i >= 0; i--)
+		{
+			if (BlackAreaCountRow[RowMax - i])
+			{
+				EndLineFlagCount++;
+				EndLineThisTime = 1;
+				break;
+			}
+		}
+		if (!EndLineThisTime && EndLineFlagCount)
+			EndLineFlagCount = 0;
+	}
 }
 #
 
