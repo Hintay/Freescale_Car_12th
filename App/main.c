@@ -83,6 +83,7 @@ void  main(void)
 	ftm_pwm_duty(FTM0, FTM_CH0, 400);//右电机
 	ftm_pwm_duty(FTM0, FTM_CH1, 400); //左电机
 	DELAY_MS(500);//延时500ms
+	//int8_t osc_array[4];
 	while (1)
 	{
 		camera_get_img();//（耗时13.4ms）图像采集
@@ -97,6 +98,9 @@ void  main(void)
 		LoopIntoRepair();//圆环补线
 		ClearLoopControl(); //出圆环标志位清零
 		TrackType();
+
+		//osc_array[0] = GetLeftMotorPules;
+		//vcan_sendware(osc_array, 4); // 把数据发送到上位机 虚拟示波器
 
 # if ObstacleOpen  //如果不需要避障碍，将这个宏定义置0即可
 		RecognitionObstacle();
