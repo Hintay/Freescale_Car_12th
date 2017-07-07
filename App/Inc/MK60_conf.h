@@ -30,7 +30,7 @@
 #define LCD_ST7735S     2       //LCD_ST7735S 与 LCD_ST7735R 外观一样，寄存器操作略有不同
 #define LCD_ST7735R     3       //
 
-#define USE_LCD        LCD_ST7735S             //选择使用的 LCD
+#define USE_LCD        LCD_ST7735R             //选择使用的 LCD
 
    /*
 	* 选择是否输出调试信息，不输出则注释下面的宏定义
