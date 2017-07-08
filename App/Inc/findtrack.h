@@ -21,6 +21,10 @@ extern int   AllLose;
 
 extern int   EndLineFlag;//终止线检测标志位,如果该标志位置1则说明检测到终止线
 extern int   EndLineEnableFlag;//终止线使能标志位,如果该标志位置1则允许检测终止线
+extern int   EndLineFlagCount;
+extern int   StartLineStart;
+extern int   StartLineEnd;
+extern int8  StartLinenNextClear;
 
 extern int BlackEndL;//20
 extern int BlackEndM;//40

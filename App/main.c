@@ -101,22 +101,28 @@ void  main(void)
 		ClearLoopControl(); //出圆环标志位清零
 		TrackType();
 
-		//osc_array[0] = GetLeftMotorPules;
-		//vcan_sendware(osc_array, 4); // 把数据发送到上位机 虚拟示波器
+		/*osc_array[0] = StartLineEnd;
+		osc_array[1] = StartLineStart + 60;
+		osc_array[2] = EndLineFlagCount - 10;
+		osc_array[3] = StartLinenNextClear - 5;
+		vcan_sendware(osc_array, 4); // 把数据发送到上位机 虚拟示波器*/
 
 # if ObstacleOpen  //如果不需要避障碍，将这个宏定义置0即可
 		RecognitionObstacle();
 #endif             
 
-		SteerControl();
+		if (DialSwitch_5)
+		{
+			SteerControl();
 #if OpenLoop              
 
-		MotorControlOpenLoop();
+			MotorControlOpenLoop();
 #endif
 
 #if CloseLoop      
-		MotorControl();
+			MotorControl();
 #endif
+		}
 
 		if (DialSwitch_1)
 		{

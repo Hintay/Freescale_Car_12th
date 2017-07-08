@@ -22,6 +22,9 @@ int   Width[RowMax + 1];//={2,3,3,3,4,4,5,5,6,6,
 					   //50,51,52,54,55,56,57,58,59,60,61};  // Width[i]  = 20+i*3/4;     //动态路宽
 int  BlackAreaCountRow[RowMax + 1];
 int  EndLineFlagCount = 0;
+int  StartLineStart;
+int  StartLineEnd;
+int8 StartLinenNextClear = 0;
 
 int   MidPri = 40;
 int   LastLine = 0;
@@ -564,20 +567,18 @@ void SearchCenterBlackline(void)
 
 	if (EndLineEnableFlag && !EndLineFlag)
 	{
-		int EndLineThisTime = 0;
-		if (EndLineFlagCount >= 4)
+		if (EndLineFlagCount >= 2)
 			EndLineFlag = 1;
-		for (i = 15; i >= 0; i--)
+
+		if (StartLineStart && StartLineStart <= (RowMax - AvaliableLines))
+			EndLineFlagCount++;
+		else if (EndLineFlagCount) // 消抖
+			StartLinenNextClear = 1;
+		else if (StartLinenNextClear)
 		{
-			if (BlackAreaCountRow[RowMax - i])
-			{
-				EndLineFlagCount++;
-				EndLineThisTime = 1;
-				break;
-			}
-		}
-		if (!EndLineThisTime && EndLineFlagCount)
 			EndLineFlagCount = 0;
+			StartLinenNextClear = 0;
+		}
 	}
 }
 #
@@ -586,9 +587,12 @@ void SearchCenterBlackline(void)
 void ConvertStartLine()
 {
 	// 初始化
-	int BlackAreaRowFlag = 0;
+	int8 BlackAreaRowFlag = 0;
 	int StartLineStartRow = 0;
 	int BlackAreaRowCount = 0;
+	int8 StartLineLock = 0;
+	StartLineStart = 0;
+	StartLineEnd = 0;
 
 	for (int i = 0; i < RowMax - 1; i++)
 	{
@@ -607,6 +611,12 @@ void ConvertStartLine()
 			{
 				if (BlackAreaRowCount >= 4)
 				{ // 重置时连续 4 行以上有起跑线特征则被认为是起跑线区域
+					if (!StartLineLock)
+					{
+						StartLineStart = StartLineStartRow;
+						StartLineEnd = i - 1;
+						StartLineLock = 1;
+					}
 					for (int j = StartLineStartRow; j <= i - 1; j++)
 						BlackAreaCountRow[j] = 1;
 				}

@@ -84,7 +84,7 @@
  * 定义 printf函数 的 串口输出端口 和 串口信息
  */
 #define VCAN_PORT           UART4
-#define VCAN_BAUD           9600
+#define VCAN_BAUD           115200
 
  /*
   * 配置延时函数
