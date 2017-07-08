@@ -567,12 +567,15 @@ void SearchCenterBlackline(void)
 
 	if (EndLineEnableFlag && !EndLineFlag)
 	{
-		if (EndLineFlagCount >= 2)
+		if (EndLineFlagCount >= 3)
 			EndLineFlag = 1;
 
 		if (StartLineStart && StartLineStart <= (RowMax - AvaliableLines))
+		{
 			EndLineFlagCount++;
-		else if (EndLineFlagCount) // Ïû¶¶
+			StartLinenNextClear = 0;
+		}
+		else if (EndLineFlagCount && !StartLinenNextClear) // Ïû¶¶
 			StartLinenNextClear = 1;
 		else if (StartLinenNextClear)
 		{
