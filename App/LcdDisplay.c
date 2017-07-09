@@ -6,7 +6,7 @@ Site_t site = { 0, 0 };      //显示图像左上角位置
 Size_t imgsize = { CAMERA_W, CAMERA_H };     //图像大小
 Size_t size;                   //显示区域图像大小   
 
-
+uint8 LCD_Page=0;//当前LCD页面
 
 void LCD_Init()
 {
@@ -65,7 +65,8 @@ void LCDDisplay(void)
 
 	}
 
-
+        if(LCD_Page)
+	{
 	site.x = 0;//变量显示行地址
 	site.y = 0;
 	LCD_str(site, "LastLine:", FCOLOUR, BCOLOUR);   //变量名
@@ -99,25 +100,61 @@ void LCDDisplay(void)
 	site.x = 64;//变量显示行地址
 	site.y = 48;
 	LCD_num(site, InflectionPointR.InflectionPointRow, YELLOW, RED);
+        }
+        else
+        {
+            site.x = 0;//变量显示行地址
+            site.y = 0;
+            LCD_str(site, "Steer_J*100:", FCOLOUR, BCOLOUR);   //变量名
+            
+            site.x = 48+48;//变量显示行地址
+            site.y = 0;
+            LCD_num(site,(uint32)(J*100), YELLOW, RED);
+            
+            
+            site.x = 0;//变量显示行地址
+            site.y = 16;
+            LCD_str(site, "Steer_JD*100:", FCOLOUR, BCOLOUR);   //变量名
+            
+            site.x = 48+48+8;//变量显示行地址
+            site.y = 16;
+            LCD_num(site, (uint32)(JD*100), YELLOW, RED);
+            
+            site.x = 0;//变量显示行地址
+            site.y = 32;
+            LCD_str(site, "BasicP*10:", FCOLOUR, BCOLOUR);   //变量名
+            
+            site.x = 48+32;//变量显示行地址
+            site.y = 32;
+            LCD_num(site, (uint32)(BasicP*10), YELLOW, RED);
+            
+            site.x = 0;//变量显示行地址
+            site.y = 48;
+            LCD_str(site, "BasicD*10:", FCOLOUR, BCOLOUR);   //变量名
+            
+            site.x = 48+32;//变量显示行地址
+            site.y = 48;
+            LCD_num(site, (uint32)(BasicD*10), YELLOW, RED);
+            
 
+            site.x = 0;//变量显示行地址
+            site.y = 16 + 48;
+            LCD_str(site, "Speed:", FCOLOUR, BCOLOUR);   //变量名
 
-	site.x = 0;//变量显示行地址
-	site.y = 48 + 16;
-	LCD_str(site, "End:", FCOLOUR, BCOLOUR);   //变量名
+            site.x = 0;//变量显示行地址
+            site.y = 32 + 48;
+            LCD_num(site, SpeedSet, YELLOW, RED);
+            
+            site.x = 0;//变量显示行地址
+            site.y = 16+32 + 48;
+            LCD_str(site, "End:", FCOLOUR, BCOLOUR);   //变量名
+            
+            site.x = 0;//变量显示行地址
+            site.y = 32 + 48+32;
+            LCD_num(site, EndLineFlag, YELLOW, RED);
 
-	site.x = 0;//变量显示行地址
-	site.y = 48 + 32;
-	LCD_num(site, EndLineFlag, YELLOW, RED);
-
-	site.x = 32;//变量显示行地址
-	site.y = 48 + 32;
-	LCD_num(site, IsStartLine, YELLOW, RED);
-
-	site.x = 0;//变量显示行地址
-	site.y = 48 + 32 + 16;
-	LCD_num(site, ObstacleLfetOkFlag, YELLOW, RED);
-
-	site.x = 0;//变量显示行地址
-	site.y = 48 + 32 + 32;
-	LCD_num(site, ObstacleRightOkFlag, YELLOW, RED);
+            site.x = 32;//变量显示行地址
+            site.y = 32 + 48+32;
+            LCD_num(site, IsStartLine, YELLOW, RED);
+        }
 }
