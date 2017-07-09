@@ -14,10 +14,9 @@
  * @date       2014-10-09
  */
 
-
 #include "common.h"
 #include "MK60_uart.h"
-
+#include "VCAN_LED.h"
 UART_MemMapPtr UARTN[UART_MAX] = {UART0_BASE_PTR, UART1_BASE_PTR, UART2_BASE_PTR, UART3_BASE_PTR, UART4_BASE_PTR, UART5_BASE_PTR}; //定义五个指针数组保存 UARTN 的地址
 
 
@@ -548,24 +547,39 @@ void uart_tx_irq_dis(UARTn_e uratn)
 }
 
 /*!
- *  @brief      UART3测试中断服务函数
+ *  @brief      UART4中断服务函数
  *  @since      v5.0
- *  @warning    此函数需要用户根据自己需求完成，这里仅仅是提供一个模版
- *  Sample usage:       set_vector_handler(UART3_RX_TX_VECTORn , uart3_test_handler);    //把 uart3_handler 函数添加到中断向量表，不需要我们手动调用
  */
-void uart3_test_handler(void)
-{
-    UARTn_e uratn = UART3;
-
-    if(UART_S1_REG(UARTN[uratn]) & UART_S1_RDRF_MASK)   //接收数据寄存器满
-    {
-        //用户需要处理接收数据
-
+char uart_read_array[100]={0};//接收数据缓冲区
+char read_datapacket[100]={0};//接收到的数据包
+char read_datapacket_len=0;//当前有效数据长度
+char read_tmp=0;
+char read_datapacket_flag=0;//接收到数据包标志位
+void uart4_test_handler(void)
+{ 
+  UARTn_e uratn = UART4;
+  UART_S1_REG(UARTN[uratn]) |= UART_S1_RDRF_MASK;//清标志位
+  uart_querychar(UART4,&read_tmp); //取出接受的数据
+  if(read_datapacket_len<97)//如果接收区还没满
+  {
+      read_datapacket_len++;//长度++
+      //printf("%d",read_datapacket_len);
+      uart_read_array[read_datapacket_len-1]=read_tmp;//装入数组
+      if(read_datapacket_len>3  && uart_read_array[read_datapacket_len-2]==0x0d && uart_read_array[read_datapacket_len-1]==0x0a)//如果最后两位是0x0d 和
+      {
+        for(unsigned char i=0;i<read_datapacket_len-2;i++)
+        {
+          read_datapacket[i]=uart_read_array[i];//将缓冲区内容放入数据包数组
+        }
+        read_datapacket[read_datapacket_len-2]=0;//最后一个字节后面跟0
+        read_datapacket_flag=1;//标志置位
+        read_datapacket_len=0;//清空长度
+         
+      }
     }
-
-    if(UART_S1_REG(UARTN[uratn]) & UART_S1_TDRE_MASK )  //发送数据寄存器空
+    else
     {
-        //用户需要处理发送数据
-
+       read_datapacket_len=0;//清空
     }
+    
 }
