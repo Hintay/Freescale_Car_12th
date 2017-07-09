@@ -570,7 +570,7 @@ void SearchCenterBlackline(void)
 		if (EndLineFlagCount >= 3)
 			EndLineFlag = 1;
 
-		if (StartLineStart && StartLineStart <= (RowMax - AvaliableLines))
+		if (StartLineStart && StartLineStart > LastLine)
 		{
 			EndLineFlagCount++;
 			StartLinenNextClear = 0;
@@ -612,8 +612,8 @@ void ConvertStartLine()
 			BlackAreaCountRow[i] = 0;
 			if (!BlackAreaRowFlag) // 连续两行无起跑线特征则重置
 			{
-				if (BlackAreaRowCount >= 4)
-				{ // 重置时连续 4 行以上有起跑线特征则被认为是起跑线区域
+				if (BlackAreaRowCount >= 3)
+				{ // 重置时连续 3 行以上有起跑线特征则被认为是起跑线区域
 					if (!StartLineLock)
 					{
 						StartLineStart = StartLineStartRow;

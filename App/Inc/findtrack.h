@@ -9,7 +9,7 @@
 #define ColumnMax	80	  //列数
 
 #define EDGE_REQUIREMENT 10 //边缘检测条件值,只有黑色点的连续数量超过本值才算是黑色
-#define BLACK_AREA_STARTLINE 6 //起始线阈值
+#define BLACK_AREA_STARTLINE 4 //起始线阈值
 
 /*** 外部函数变量申明 ****/
 

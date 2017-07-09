@@ -77,6 +77,23 @@ void HardWare_Init(void)
 
 void  main(void)
 {
+	if (MC_SRSH & MC_SRSH_SW_MASK) printf("Software Reset\n");
+
+	if (MC_SRSH & MC_SRSH_LOCKUP_MASK) printf("Core Lockup Event Reset\n");
+
+	if (MC_SRSH & MC_SRSH_JTAG_MASK) printf("JTAG Reset\n");
+
+	if (MC_SRSL & MC_SRSL_POR_MASK) printf("Power-on Reset\n");
+
+	if (MC_SRSL & MC_SRSL_PIN_MASK) printf("External Pin Reset\n");
+
+	if (MC_SRSL & MC_SRSL_COP_MASK) printf("Watchdog(COP) Reset\n");
+
+	if (MC_SRSL & MC_SRSL_LOC_MASK) printf("Loss of Clock Reset\n");
+
+	if (MC_SRSL & MC_SRSL_LVD_MASK) printf("Low-voltage Detect Reset\n");
+
+	if (MC_SRSL & MC_SRSL_WAKEUP_MASK) printf("LLWU Reset\n");
 
 	HardWare_Init();
 	if (DialSwitch_4)
@@ -85,7 +102,7 @@ void  main(void)
 		ftm_pwm_duty(FTM0, FTM_CH1, 400); //左电机
 		DELAY_MS(500);//延时500ms
 	}
-	//int8_t osc_array[4];
+	//int8_t osc_array[6];
 	while (1)
 	{
 		camera_get_img();//（耗时13.4ms）图像采集
@@ -105,30 +122,26 @@ void  main(void)
 		osc_array[1] = StartLineStart + 60;
 		osc_array[2] = EndLineFlagCount - 10;
 		osc_array[3] = StartLinenNextClear - 5;
-		vcan_sendware(osc_array, 4); // 把数据发送到上位机 虚拟示波器*/
+		osc_array[4] = GetRightMotorPules;
+		osc_array[5] = GetLeftMotorPules;
+		vcan_sendware(osc_array, 6); // 把数据发送到上位机 虚拟示波器*/
 
 # if ObstacleOpen  //如果不需要避障碍，将这个宏定义置0即可
 		RecognitionObstacle();
-#endif             
-
-		if (DialSwitch_5)
-		{
-			SteerControl();
-#if OpenLoop              
-
-			MotorControlOpenLoop();
 #endif
 
-#if CloseLoop      
-			MotorControl();
+		SteerControl();
+#if OpenLoop
+		MotorControlOpenLoop();
 #endif
-		}
+
+#if CloseLoop
+		MotorControl();
+#endif
 
 		if (DialSwitch_1)
 		{
-
 			LCDDisplay();//液晶显示
-
 		}
 	}
 
