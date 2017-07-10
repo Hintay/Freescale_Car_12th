@@ -28,6 +28,10 @@
 extern float  LastError;
 extern float  Error;
 
+extern float J;
+extern float JD;
+extern float BasicP;
+extern float BasicD;
 
 void SteerInit(void);//¶æ»ú³õÊ¼»¯
 void CalculateError(void);

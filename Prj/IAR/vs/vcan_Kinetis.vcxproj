@@ -47,6 +47,7 @@
     </ClCompile>
     <ClCompile Include="..\..\..\App\TrackType.c">
     </ClCompile>
+    <ClCompile Include="..\..\..\App\ZJGM_Crotrol.cpp" />
     <ClCompile Include="..\..\..\Board\src\VCAN_LCD.c">
     </ClCompile>
     <ClCompile Include="..\..\..\Board\src\VCAN_ASCII.c">

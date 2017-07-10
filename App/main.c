@@ -22,6 +22,9 @@ void HardWare_Init(void)
 	set_vector_handler(PORTA_VECTORn, PORTA_IRQHandler);   //设置 PORTA 的中断服务函数为 PORTA_IRQHandler
 	set_vector_handler(DMA0_VECTORn, DMA0_IRQHandler);     //设置 DMA0 的中断服务函数为 PORTA_IRQHandler
 
+	set_vector_handler(UART4_RX_TX_VECTORn, uart_handler);
+	uart_rx_irq_en(VCAN_PORT);
+
 #if 1										      
 	ftm_quad_init(FTM2);  //FTM2  PTA10 （ PTA11 ）正交解码初始化
 	ftm_quad_clean(FTM2);//计数寄存器清零
@@ -33,7 +36,6 @@ void HardWare_Init(void)
 	pit_init_ms(PIT0, 1);//PIT初始化  1ms                  
 	set_vector_handler(PIT0_VECTORn, PIT0_IRQHandler);   // 设置中断复位函数到中断向量表
 	enable_irq(PIT0_IRQn);                  // 使能PIT0中断
-
 #endif    
 
 
@@ -78,21 +80,13 @@ void HardWare_Init(void)
 void  main(void)
 {
 	if (MC_SRSH & MC_SRSH_SW_MASK) printf("Software Reset\n");
-
 	if (MC_SRSH & MC_SRSH_LOCKUP_MASK) printf("Core Lockup Event Reset\n");
-
 	if (MC_SRSH & MC_SRSH_JTAG_MASK) printf("JTAG Reset\n");
-
 	if (MC_SRSL & MC_SRSL_POR_MASK) printf("Power-on Reset\n");
-
 	if (MC_SRSL & MC_SRSL_PIN_MASK) printf("External Pin Reset\n");
-
 	if (MC_SRSL & MC_SRSL_COP_MASK) printf("Watchdog(COP) Reset\n");
-
 	if (MC_SRSL & MC_SRSL_LOC_MASK) printf("Loss of Clock Reset\n");
-
 	if (MC_SRSL & MC_SRSL_LVD_MASK) printf("Low-voltage Detect Reset\n");
-
 	if (MC_SRSL & MC_SRSL_WAKEUP_MASK) printf("LLWU Reset\n");
 
 	HardWare_Init();
@@ -105,6 +99,12 @@ void  main(void)
 	//int8_t osc_array[6];
 	while (1)
 	{
+		if (*read_datapacket)
+		{
+			zjgm_getcrotroldata();
+			*read_datapacket = 0; // 重置
+		}
+
 		camera_get_img();//（耗时13.4ms）图像采集
 		img_extract(img, imgbuff);
 		//vcan_sendimg(imgbuff,CAMERA_SIZE);//将图像发送到上位机
@@ -131,6 +131,7 @@ void  main(void)
 #endif
 
 		SteerControl();
+
 #if OpenLoop
 		MotorControlOpenLoop();
 #endif

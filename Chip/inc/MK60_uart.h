@@ -30,10 +30,6 @@ typedef enum
 } UARTn_e;
 
 extern UART_MemMapPtr UARTN[UART_MAX];
-    
-extern char read_datapacket[];//接收到的数据包
-extern char read_datapacket_flag;//接收到数据包标志位    
-    
 /********************************************************************/
 
 
@@ -66,7 +62,6 @@ extern void uart_rx_irq_dis(UARTn_e);                          //关串口接收中断
 extern void uart_tx_irq_dis(UARTn_e);                          //关串口发送中断
 extern void uart_txc_irq_dis(UARTn_e);                         //关串口发送完成中断
 
-extern void uart4_test_handler(void);
 /********************************************************************/
 
 #endif /* __MK60_UART_H__ */

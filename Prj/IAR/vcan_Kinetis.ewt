@@ -7003,6 +7003,12 @@
     <file>
       <name>$PROJ_DIR$\..\..\Board\src\VCAN_LCD.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\App\ZJGM_Crotrol.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\App\Inc\ZJGM_Crotrol.h</name>
+    </file>
   </group>
   <group>
     <name>Board</name>
