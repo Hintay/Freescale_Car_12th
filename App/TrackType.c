@@ -37,7 +37,7 @@ unsigned char  LoopWidth[61] = { 2,3,3,3,4,4,5,5,6,6,
 							   41,41,43,43,45,45,47,47,49,50,
 							   50,51,52,54,55,56,57,58,59,60,61 };
 
-#define  TestStrightIntoLoop      0 //此宏定义置1，就可以对直入环道进行测试
+#define  TestStrightIntoLoop      1 //此宏定义置1，就可以对直入环道进行测试
 #define  TestLoopEixt             0 //此宏定义置1，就可以环道出口方向进行测试
 unsigned char LoopEixtR[60];  //寻找出口时存放数据
 unsigned char LoopEixtL[60];  //寻找出口时存放数据
@@ -666,6 +666,7 @@ void LoopRecognition(LoopType *prt)
 #if TestStrightIntoLoop
 
 	BuzzerTest(Loop.StrightIntoLoop);
+	//BuzzerTest(LoopExit.LoopInFlag);
 
 #endif
 
@@ -877,7 +878,7 @@ void LoopIntoRepair()
 		{
 			for (i = 58; i > LastLine; i--)
 			{
-				MiddleLine[i] = RightEdge[i] - LoopWidth[i] / 2;//右边线-赛道半宽
+				MiddleLine[i] = RightEdge[i] - LoopWidth[i] * 2 / 3;//右边线-赛道半宽
 
 			}
 		}
@@ -898,7 +899,7 @@ void LoopIntoRepair()
 		{
 			for (i = 58; i > LastLine; i--)
 			{
-				MiddleLine[i] = LeftEdge[i] + LoopWidth[i] / 2;//左边线+赛道半宽
+				MiddleLine[i] = LeftEdge[i] + LoopWidth[i] * 2 / 3;//左边线+赛道半宽
 
 			}
 		}
@@ -996,7 +997,7 @@ void ClearLoopControl()
 	if (LoopExit.LoopInDelay)//开始延时清环道控制标
 	{
 		N++;
-		if (N >= 6)
+		if (N >= 12)
 		{
 			N = 0;
 			LoopExit.LoopInDelay = 0;//清掉延时标志位
@@ -1010,9 +1011,9 @@ void ClearLoopControl()
 		}
 	}
 
-	BuzzerTest(LoopExit.LeftControlExit || LoopExit.RightControlExit);
-
 #if TestLoopEixt
+
+	BuzzerTest(LoopExit.LeftControlExit || LoopExit.RightControlExit);
 
 	if (LoopExit.LeftControlExit)
 	{

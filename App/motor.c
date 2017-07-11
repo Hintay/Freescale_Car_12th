@@ -143,7 +143,7 @@ void GetTargetSpeed(void)
 
 		if (Loop.StrightIntoLoop)
 		{
-			SpeedSet = 80;
+			SpeedSet = 50;
 		}
 
 		else if (Tracktype.LongStraightaway)
@@ -160,7 +160,6 @@ void GetTargetSpeed(void)
 		{
 			SlowSpeed = 1;
 		}
-
 
 		else
 		{
@@ -196,41 +195,76 @@ void GetTargetSpeed(void)
 		}
 
 	}
-
-	else if (!DialSwitch_2)//二号拨码开关往下拨
+	else //二号拨码开关往下拨
 	{
-		SpeedP = 16.0;//50.0;40
-		SpeedI = 0.0006;//16.0;50,0.0006
-		SpeedD = 0.0;//1.3,10.0
+		if (DialSwitch_5)
+		{ //五号拨码开关往上拨
+			SpeedP = 16.0;//50.0;40
+			SpeedI = 0.0006;//16.0;50,0.0006
+			SpeedD = 0.0;//1.3,10.0
 
+			if (Loop.StrightIntoLoop)
+			{
+				SpeedSet = 45;
+			}
+			else
+			{
+				SpeedSet = 50;
+			}
 
-		if (Loop.StrightIntoLoop)
-		{
-			SpeedSet = 50;
+			if (ABS(Error) >= 10)
+			{
+				//Differential_P=(float)(30.0/((60-(AvaliableLines+10))*(60-(AvaliableLines+10))));
+				//SpeedSet=50;
+
+				Differential_P = 0.024;//调差速，调太大会跳轮
+				LSpeedSet = (int32)(SpeedSet - (Differential_P*Error*SpeedSet));//左轮差速
+				if (LSpeedSet <= 10)    LSpeedSet = 10;
+				if (LSpeedSet >= 150)  LSpeedSet = 150;
+				RSpeedSet = (int32)(SpeedSet + (Differential_P*Error*SpeedSet));//右轮差速
+				if (RSpeedSet <= 10)    RSpeedSet = 10;
+				if (RSpeedSet >= 150)  RSpeedSet = 150;
+			}
+			else
+			{
+				LSpeedSet = SpeedSet;
+				RSpeedSet = SpeedSet;
+			}
 		}
 		else
 		{
-			SpeedSet = 65;
+			SpeedP = 16.0;//50.0;40
+			SpeedI = 0.0006;//16.0;50,0.0006
+			SpeedD = 0.0;//1.3,10.0
 
-		}
 
-		if (ABS(Error) >= 10)
-		{
-			//Differential_P=(float)(30.0/((60-(AvaliableLines+10))*(60-(AvaliableLines+10))));
-			 //SpeedSet=50;
+			if (Loop.StrightIntoLoop)
+			{
+				SpeedSet = 50;
+			}
+			else
+			{
+				SpeedSet = 65;
+			}
 
-			Differential_P = 0.028;//调差速，调太大会跳轮
-			LSpeedSet = (int32)(SpeedSet - (Differential_P*Error*SpeedSet));//左轮差速
-			if (LSpeedSet <= 10)    LSpeedSet = 10;
-			if (LSpeedSet >= 150)  LSpeedSet = 150;
-			RSpeedSet = (int32)(SpeedSet + (Differential_P*Error*SpeedSet));//右轮差速
-			if (RSpeedSet <= 10)    RSpeedSet = 10;
-			if (RSpeedSet >= 150)  RSpeedSet = 150;
-		}
-		else
-		{
-			LSpeedSet = SpeedSet;
-			RSpeedSet = SpeedSet;
+			if (ABS(Error) >= 10)
+			{
+				//Differential_P=(float)(30.0/((60-(AvaliableLines+10))*(60-(AvaliableLines+10))));
+				 //SpeedSet=50;
+
+				Differential_P = 0.028;//调差速，调太大会跳轮
+				LSpeedSet = (int32)(SpeedSet - (Differential_P*Error*SpeedSet));//左轮差速
+				if (LSpeedSet <= 10)    LSpeedSet = 10;
+				if (LSpeedSet >= 150)  LSpeedSet = 150;
+				RSpeedSet = (int32)(SpeedSet + (Differential_P*Error*SpeedSet));//右轮差速
+				if (RSpeedSet <= 10)    RSpeedSet = 10;
+				if (RSpeedSet >= 150)  RSpeedSet = 150;
+			}
+			else
+			{
+				LSpeedSet = SpeedSet;
+				RSpeedSet = SpeedSet;
+			}
 		}
 	}
 
@@ -280,7 +314,6 @@ void MotorControl(void)
 	}
 	else
 	{
-
 		ftm_pwm_duty(FTM0, FTM_CH0, 0);
 		ftm_pwm_duty(FTM0, FTM_CH1, 0); //PTC2,左电机       
 	}

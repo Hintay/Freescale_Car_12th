@@ -207,7 +207,7 @@
     <ClCompile Include="..\..\..\Lib\USB\USB_CDC.c">
       <Filter>源文件\LIB\USB</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\App\ZJGM_Crotrol.cpp">
+    <ClCompile Include="..\..\..\App\ZJGM_Crotrol.c">
       <Filter>源文件\App</Filter>
     </ClCompile>
   </ItemGroup>

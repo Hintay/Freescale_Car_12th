@@ -11,7 +11,6 @@ void BuzzerInit()
 
 void BuzzerTest(unsigned char flag)
 {
-#if 0
 	unsigned char Flag = 0;
 	Flag = 0;
 	Flag = flag;
@@ -24,7 +23,6 @@ void BuzzerTest(unsigned char flag)
 	{
 		BuzzerQuiet;
 	}
-#endif
 }
 
 #endif

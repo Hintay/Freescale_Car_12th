@@ -25,6 +25,7 @@ int  EndLineFlagCount = 0;
 int  StartLineStart;
 int  StartLineEnd;
 int8 StartLinenNextClear = 0;
+int8 MaxStartLineCount;
 
 int   MidPri = 40;
 int   LastLine = 0;
@@ -567,7 +568,14 @@ void SearchCenterBlackline(void)
 
 	if (EndLineEnableFlag && !EndLineFlag)
 	{
-		if (EndLineFlagCount >= 3)
+		if (DialSwitch_2) // 高速多策略
+			MaxStartLineCount = 2;
+		else if(DialSwitch_5) // 最低速
+			MaxStartLineCount = 5;
+		else
+			MaxStartLineCount = 3;
+
+		if (EndLineFlagCount >= MaxStartLineCount)
 			EndLineFlag = 1;
 
 		if (StartLineStart && StartLineStart > LastLine)
