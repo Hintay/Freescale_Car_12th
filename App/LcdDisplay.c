@@ -6,7 +6,8 @@ Site_t site = { 0, 0 };      //显示图像左上角位置
 Size_t imgsize = { CAMERA_W, CAMERA_H };     //图像大小
 Size_t size;                   //显示区域图像大小   
 
-uint8 LCD_Page = 0;//当前LCD页面
+#define LCD_PAGE 1
+//uint8 LCD_Page = 0;//当前LCD页面
 
 void LCD_Init()
 {
@@ -65,8 +66,7 @@ void LCDDisplay(void)
 
 	}
 
-	if (LCD_Page)
-	{
+#if LCD_PAGE
 		site.x = 0;//变量显示行地址
 		site.y = 0;
 		LCD_str(site, "LastLine:", FCOLOUR, BCOLOUR);   //变量名
@@ -100,9 +100,7 @@ void LCDDisplay(void)
 		site.x = 64;//变量显示行地址
 		site.y = 48;
 		LCD_num(site, InflectionPointR.InflectionPointRow, YELLOW, RED);
-	}
-	else
-	{
+#else
 		site.x = 0;//变量显示行地址
 		site.y = 0;
 		LCD_str(site, "Steer_J*100:", FCOLOUR, BCOLOUR);   //变量名
@@ -156,5 +154,5 @@ void LCDDisplay(void)
 		site.x = 32;//变量显示行地址
 		site.y = 32 + 48 + 32;
 		LCD_num(site, IsStartLine, YELLOW, RED);
-	}
+#endif
 }

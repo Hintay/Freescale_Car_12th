@@ -32,6 +32,7 @@ extern float J;
 extern float JD;
 extern float BasicP;
 extern float BasicD;
+extern float LastLineMaxInLoop;
 
 void SteerInit(void);//¶æ»ú³õÊ¼»¯
 void CalculateError(void);

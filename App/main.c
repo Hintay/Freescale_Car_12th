@@ -22,8 +22,11 @@ void HardWare_Init(void)
 	set_vector_handler(PORTA_VECTORn, PORTA_IRQHandler);   //设置 PORTA 的中断服务函数为 PORTA_IRQHandler
 	set_vector_handler(DMA0_VECTORn, DMA0_IRQHandler);     //设置 DMA0 的中断服务函数为 PORTA_IRQHandler
 
+#if DEBUG_MODE
+	// 设置串口中断
 	set_vector_handler(UART4_RX_TX_VECTORn, uart_handler);
 	uart_rx_irq_en(VCAN_PORT);
+#endif
 
 #if 1										      
 	ftm_quad_init(FTM2);  //FTM2  PTA10 （ PTA11 ）正交解码初始化
@@ -79,6 +82,7 @@ void HardWare_Init(void)
 
 void  main(void)
 {
+#if DEBUG_MODE
 	if (MC_SRSH & MC_SRSH_SW_MASK) printf("Software Reset\n");
 	if (MC_SRSH & MC_SRSH_LOCKUP_MASK) printf("Core Lockup Event Reset\n");
 	if (MC_SRSH & MC_SRSH_JTAG_MASK) printf("JTAG Reset\n");
@@ -88,6 +92,7 @@ void  main(void)
 	if (MC_SRSL & MC_SRSL_LOC_MASK) printf("Loss of Clock Reset\n");
 	if (MC_SRSL & MC_SRSL_LVD_MASK) printf("Low-voltage Detect Reset\n");
 	if (MC_SRSL & MC_SRSL_WAKEUP_MASK) printf("LLWU Reset\n");
+#endif
 
 	HardWare_Init();
 	if (DialSwitch_4)

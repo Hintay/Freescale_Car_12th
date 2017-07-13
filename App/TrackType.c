@@ -37,7 +37,7 @@ unsigned char  LoopWidth[61] = { 2,3,3,3,4,4,5,5,6,6,
 							   41,41,43,43,45,45,47,47,49,50,
 							   50,51,52,54,55,56,57,58,59,60,61 };
 
-#define  TestStrightIntoLoop      1 //此宏定义置1，就可以对直入环道进行测试
+#define  TestStrightIntoLoop      0 //此宏定义置1，就可以对直入环道进行测试
 #define  TestLoopEixt             0 //此宏定义置1，就可以环道出口方向进行测试
 unsigned char LoopEixtR[60];  //寻找出口时存放数据
 unsigned char LoopEixtL[60];  //寻找出口时存放数据
@@ -865,7 +865,14 @@ void LoopIntoRepair()
 
 	if (LoopExit.RightControlExit)//如果获得了出口在右边的控制信号
 	{
-		if (LoopExit.IntoLoopOk || LoopExit.LoopInFlag)
+		if (LoopExit.LoopInDelay)
+		{
+			for (i = 58; i > LastLine; i--)
+			{
+				MiddleLine[i] = RightEdge[i] - LoopWidth[i] / 3;//右边线-赛道半宽
+			}
+		}
+		else if (LoopExit.IntoLoopOk || LoopExit.LoopInFlag)
 		{
 			for (i = 58; i > LastLine; i--)
 			{
@@ -873,13 +880,11 @@ void LoopIntoRepair()
 			}
 
 		}
-
 		else
 		{
 			for (i = 58; i > LastLine; i--)
 			{
-				MiddleLine[i] = RightEdge[i] - LoopWidth[i] * 2 / 3;//右边线-赛道半宽
-
+				MiddleLine[i] = RightEdge[i] - LoopWidth[i] / 2;//右边线-赛道半宽
 			}
 		}
 	}
@@ -887,7 +892,14 @@ void LoopIntoRepair()
 
 	else if (LoopExit.LeftControlExit)//如果获得了出口在左边的控制信号
 	{
-		if (LoopExit.IntoLoopOk || LoopExit.LoopInFlag)
+		if (LoopExit.LoopInDelay)
+		{
+			for (i = 58; i > LastLine; i--)
+			{
+				MiddleLine[i] = LeftEdge[i] + LoopWidth[i] / 3;//右边线-赛道半宽
+			}
+		}
+		else if (LoopExit.IntoLoopOk || LoopExit.LoopInFlag)
 		{
 			for (i = 58; i > LastLine; i--)
 			{
@@ -899,8 +911,7 @@ void LoopIntoRepair()
 		{
 			for (i = 58; i > LastLine; i--)
 			{
-				MiddleLine[i] = LeftEdge[i] + LoopWidth[i] * 2 / 3;//左边线+赛道半宽
-
+				MiddleLine[i] = LeftEdge[i] + LoopWidth[i] / 2;//左边线+赛道半宽
 			}
 		}
 	}

@@ -146,14 +146,19 @@ void GetTargetSpeed(void)
 			SpeedSet = 50;
 		}
 
+		else if (ObstacleLfetOkFlag || ObstacleRightOkFlag)
+		{
+			SpeedSet = 50;
+		}
+
 		else if (Tracktype.LongStraightaway)
 		{
-			SpeedSet = 100;
+			SpeedSet = 80;
 		}
 
 		else if (Tracktype.ShortStraightaway&&Tracktype.LongStraightawayIntoBend == 0)
 		{
-			SpeedSet = 70;
+			SpeedSet = 60;
 		}
 
 		else if (Tracktype.ShortStraightaway&&Tracktype.LongStraightawayIntoBend)
@@ -163,7 +168,7 @@ void GetTargetSpeed(void)
 
 		else
 		{
-			SpeedSet = 80;
+			SpeedSet = 75;
 		}
 
 		if (SlowSpeed)
@@ -197,74 +202,42 @@ void GetTargetSpeed(void)
 	}
 	else //二号拨码开关往下拨
 	{
-		if (DialSwitch_5)
-		{ //五号拨码开关往上拨
-			SpeedP = 16.0;//50.0;40
-			SpeedI = 0.0006;//16.0;50,0.0006
-			SpeedD = 0.0;//1.3,10.0
 
-			if (Loop.StrightIntoLoop)
-			{
-				SpeedSet = 45;
-			}
-			else
-			{
-				SpeedSet = 50;
-			}
+		SpeedP = 16.0;//50.0;40
+		SpeedI = 0.0006;//16.0;50,0.0006
+		SpeedD = 0.0;//1.3,10.0
 
-			if (ABS(Error) >= 10)
-			{
-				//Differential_P=(float)(30.0/((60-(AvaliableLines+10))*(60-(AvaliableLines+10))));
-				//SpeedSet=50;
 
-				Differential_P = 0.024;//调差速，调太大会跳轮
-				LSpeedSet = (int32)(SpeedSet - (Differential_P*Error*SpeedSet));//左轮差速
-				if (LSpeedSet <= 10)    LSpeedSet = 10;
-				if (LSpeedSet >= 150)  LSpeedSet = 150;
-				RSpeedSet = (int32)(SpeedSet + (Differential_P*Error*SpeedSet));//右轮差速
-				if (RSpeedSet <= 10)    RSpeedSet = 10;
-				if (RSpeedSet >= 150)  RSpeedSet = 150;
-			}
-			else
-			{
-				LSpeedSet = SpeedSet;
-				RSpeedSet = SpeedSet;
-			}
+		if (Loop.StrightIntoLoop)
+		{
+			SpeedSet = 50;
+		}
+		/*else if (ObstacleLfetOkFlag || ObstacleRightOkFlag)
+		{
+			SpeedSet = 50;
+		}*/
+		else
+		{
+			SpeedSet = 65;
+		}
+
+		if (ABS(Error) >= 10)
+		{
+			//Differential_P=(float)(30.0/((60-(AvaliableLines+10))*(60-(AvaliableLines+10))));
+			 //SpeedSet=50;
+
+			Differential_P = 0.028;//调差速，调太大会跳轮
+			LSpeedSet = (int32)(SpeedSet - (Differential_P*Error*SpeedSet));//左轮差速
+			if (LSpeedSet <= 10)    LSpeedSet = 10;
+			if (LSpeedSet >= 150)  LSpeedSet = 150;
+			RSpeedSet = (int32)(SpeedSet + (Differential_P*Error*SpeedSet));//右轮差速
+			if (RSpeedSet <= 10)    RSpeedSet = 10;
+			if (RSpeedSet >= 150)  RSpeedSet = 150;
 		}
 		else
 		{
-			SpeedP = 16.0;//50.0;40
-			SpeedI = 0.0006;//16.0;50,0.0006
-			SpeedD = 0.0;//1.3,10.0
-
-
-			if (Loop.StrightIntoLoop)
-			{
-				SpeedSet = 50;
-			}
-			else
-			{
-				SpeedSet = 65;
-			}
-
-			if (ABS(Error) >= 10)
-			{
-				//Differential_P=(float)(30.0/((60-(AvaliableLines+10))*(60-(AvaliableLines+10))));
-				 //SpeedSet=50;
-
-				Differential_P = 0.028;//调差速，调太大会跳轮
-				LSpeedSet = (int32)(SpeedSet - (Differential_P*Error*SpeedSet));//左轮差速
-				if (LSpeedSet <= 10)    LSpeedSet = 10;
-				if (LSpeedSet >= 150)  LSpeedSet = 150;
-				RSpeedSet = (int32)(SpeedSet + (Differential_P*Error*SpeedSet));//右轮差速
-				if (RSpeedSet <= 10)    RSpeedSet = 10;
-				if (RSpeedSet >= 150)  RSpeedSet = 150;
-			}
-			else
-			{
-				LSpeedSet = SpeedSet;
-				RSpeedSet = SpeedSet;
-			}
+			LSpeedSet = SpeedSet;
+			RSpeedSet = SpeedSet;
 		}
 	}
 

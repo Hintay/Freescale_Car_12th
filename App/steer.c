@@ -18,6 +18,8 @@ float  BasicP=3; //基本的P值
 float BasicD = 6.5;//6.5 //基本的P值
 uint32 SteerPwm = 0, LastSteerSwm = 0;//舵机的pwm值和上次舵机的pwm值
 
+float LastLineMaxInLoop = 30;
+
 //加权平均，权值的选取
 #if 0
 float Weight[60] = {
@@ -152,6 +154,10 @@ void CalculateError(void)
 	}
 	else
 	{
+		if (Loop.StrightIntoLoop && LastLine < (int)LastLineMaxInLoop)
+		{
+			LastLine = (int)LastLineMaxInLoop;
+		}
 		for (i = 57; i > LastLine; i--)
 
 		{

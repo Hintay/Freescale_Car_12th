@@ -18,6 +18,8 @@
 #include "common.h"
 #include "MK60_uart.h"
 
+#define  DEBUG_MODE 0
+
 extern void zjgm_getcrotroldata();
 extern void uart_handler(void);
 

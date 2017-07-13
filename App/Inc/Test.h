@@ -1,7 +1,7 @@
 #ifndef __TEST_H__
 #define __TEST_H__
 
-#define BuzzerOpen  1 //打开蜂鸣器
+#define BuzzerOpen  0 //打开蜂鸣器
 
 #define LedOpen     1 //打开Led
 

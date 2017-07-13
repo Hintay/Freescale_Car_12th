@@ -49,6 +49,8 @@ char *zjgm_getdataaddr(char input)
 			return (char *)&BasicP;
 		case 0x04:
 			return (char *)&BasicD;
+		case 0x05:
+			return (char *)&LastLineMaxInLoop;
 		default:
 			return 0;
 	}
