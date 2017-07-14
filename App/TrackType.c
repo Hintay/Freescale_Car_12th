@@ -685,154 +685,164 @@ void FindLoopOptimalExit()
 	//有环道标志位，并且还没找到出口
 	if (Loop.StrightIntoLoop && (!LoopExit.RightControlExit) && (!LoopExit.LeftControlExit))
 	{
-		//初始化数组
-		for (i = 0; i < 60; i++)
+		if (DialSwitch_4) // 开关 4 往上拨
 		{
-			LoopEixtR[i] = 80;
-		}
-		//从封顶的前两行开始寻找,重新找出更多的左右线
-		for (i = LastLine; i > 12; i--)//先找右边
-		{
-			//根据不同的情况判断扫描起始行
-			if (i == LastLine)
-			{
-				start = RightEdge[LastLine + 2] - 3;
-			}
-
+			if(DialSwitch_5) // 开关 5 往上拨
+				LoopExit.LeftNearExit = 1; // 左侧出口
 			else
+				LoopExit.RightNearExit = 1; // 右侧出口
+		}
+		else
+		{
+			//初始化数组
+			for (i = 0; i < 60; i++)
 			{
-				if (LoopEixtR[i + 1] != 80)
-				{
-					start = LoopEixtR[i + 1] - 3;//边缘追踪的思想
-				}
-
-				else
+				LoopEixtR[i] = 80;
+			}
+			//从封顶的前两行开始寻找,重新找出更多的左右线
+			for (i = LastLine; i > 12; i--)//先找右边
+			{
+				//根据不同的情况判断扫描起始行
+				if (i == LastLine)
 				{
 					start = RightEdge[LastLine + 2] - 3;
 				}
-			}
-
-			for (j = start; j < 78; j++)
-			{
-				if (img[i][j] == White_Point&&img[i][j + 1] == Black_Point)//白->黑跳变
-				{
-					LoopEixtR[i] = j;
-					break;//找到跳变退出
-				}
-			}
-
-		}
-		//再找左边
-		for (i = 0; i < 60; i++)
-		{
-			LoopEixtL[i] = 0;
-		}
-
-		for (i = LastLine; i > 12; i--)
-		{
-			if (i == LastLine)
-			{
-				start = LeftEdge[LastLine + 2] + 3;
-			}
-
-			else
-			{
-				if (LoopEixtL[i + 1] != 0)
-				{
-					start = LoopEixtL[i + 1] + 3;
-				}
 
 				else
+				{
+					if (LoopEixtR[i + 1] != 80)
+					{
+						start = LoopEixtR[i + 1] - 3;//边缘追踪的思想
+					}
+
+					else
+					{
+						start = RightEdge[LastLine + 2] - 3;
+					}
+				}
+
+				for (j = start; j < 78; j++)
+				{
+					if (img[i][j] == White_Point&&img[i][j + 1] == Black_Point)//白->黑跳变
+					{
+						LoopEixtR[i] = j;
+						break;//找到跳变退出
+					}
+				}
+
+			}
+			//再找左边
+			for (i = 0; i < 60; i++)
+			{
+				LoopEixtL[i] = 0;
+			}
+
+			for (i = LastLine; i > 12; i--)
+			{
+				if (i == LastLine)
 				{
 					start = LeftEdge[LastLine + 2] + 3;
 				}
-			}
-			for (j = start; j > 1; j--)
-			{
-				if (img[i][j] == White_Point&&img[i][j - 1] == Black_Point)//跳变
-				{
-					LoopEixtL[i] = j;
-					break;//找到跳变退出
-				}
-			}
 
-		}
-
-		for (i = LastLine; i > 12; i--)
-		{
-			if (LoopEixtL[i] != 0)
-			{
-				LoopNumberL++;//记录左边找到了多少行
-
-			}
-
-			if (LoopEixtR[i] != 80)
-			{
-				LoopNumberR++;//记录左边找到了多少行
-			}
-
-		}
-
-		if (InflectionPointL.InflectionPointFlag&&InflectionPointR.InflectionPointFlag)//正的
-		{
-			Scan.StarCol = 0;
-			Scan.StarCol = (InflectionPointL.InflectionPointCol + InflectionPointR.InflectionPointCol) / 2;
-			if (Scan.StarCol >= 37 && Scan.StarCol <= 41)
-			{
-
-				if (((LastLine - 12) - LoopNumberR <= 3) && ((LastLine - 12) - LoopNumberL > 3))
-				{
-
-					LoopExit.LeftNearExit = 1;//标记找到左边近处
-				}
-
-				else if (((LastLine - 12) - LoopNumberR > 3) && ((LastLine - 12) - LoopNumberL <= 3))
-				{
-					LoopExit.RightNearExit = 1;//标记找到左边近处
-				}
-			}
-
-			else if (Scan.StarCol > 41)//偏左
-			{
-				if ((LastLine - 12) - LoopNumberL > 2)
-				{
-					LoopExit.LeftNearExit = 1;//标记找到左边近处
-				}
 				else
 				{
-					LoopExit.RightNearExit = 1;//标记找到右边近处
+					if (LoopEixtL[i + 1] != 0)
+					{
+						start = LoopEixtL[i + 1] + 3;
+					}
+
+					else
+					{
+						start = LeftEdge[LastLine + 2] + 3;
+					}
+				}
+				for (j = start; j > 1; j--)
+				{
+					if (img[i][j] == White_Point&&img[i][j - 1] == Black_Point)//跳变
+					{
+						LoopEixtL[i] = j;
+						break;//找到跳变退出
+					}
 				}
 
 			}
 
-			else if (Scan.StarCol < 37)//偏右
+			for (i = LastLine; i > 12; i--)
 			{
-				if ((LastLine - 12) - LoopNumberR > 2)
+				if (LoopEixtL[i] != 0)
 				{
-					LoopExit.RightNearExit = 1;//标记找到右边近处
+					LoopNumberL++;//记录左边找到了多少行
+
 				}
-				else
+
+				if (LoopEixtR[i] != 80)
 				{
-					LoopExit.LeftNearExit = 1;//标记找到左边近处
+					LoopNumberR++;//记录左边找到了多少行
 				}
 
 			}
 
-		}
+			if (InflectionPointL.InflectionPointFlag&&InflectionPointR.InflectionPointFlag)//正的
+			{
+				Scan.StarCol = 0;
+				Scan.StarCol = (InflectionPointL.InflectionPointCol + InflectionPointR.InflectionPointCol) / 2;
+				if (Scan.StarCol >= 37 && Scan.StarCol <= 41)
+				{
 
-		else if (!InflectionPointL.InflectionPointFlag&&InflectionPointR.InflectionPointFlag)//偏右
-		{
-			LoopExit.RightNearExit = 1;//标记找到右边近处
-		}
+					if (((LastLine - 12) - LoopNumberR <= 3) && ((LastLine - 12) - LoopNumberL > 3))
+					{
 
-		else if (!InflectionPointL.InflectionPointFlag&&InflectionPointR.InflectionPointFlag)//偏左
-		{
-			LoopExit.LeftNearExit = 1;//标记找到左边近处
-		}
+						LoopExit.LeftNearExit = 1;//标记找到左边近处
+					}
 
-		else  //如果前面都没有一个明确的方向，就默认左边
-		{
-			LoopExit.LeftNearExit = 1;//标记找到左边近处
+					else if (((LastLine - 12) - LoopNumberR > 3) && ((LastLine - 12) - LoopNumberL <= 3))
+					{
+						LoopExit.RightNearExit = 1;//标记找到左边近处
+					}
+				}
+
+				else if (Scan.StarCol > 41)//偏左
+				{
+					if ((LastLine - 12) - LoopNumberL > 2)
+					{
+						LoopExit.LeftNearExit = 1;//标记找到左边近处
+					}
+					else
+					{
+						LoopExit.RightNearExit = 1;//标记找到右边近处
+					}
+
+				}
+
+				else if (Scan.StarCol < 37)//偏右
+				{
+					if ((LastLine - 12) - LoopNumberR > 2)
+					{
+						LoopExit.RightNearExit = 1;//标记找到右边近处
+					}
+					else
+					{
+						LoopExit.LeftNearExit = 1;//标记找到左边近处
+					}
+
+				}
+
+			}
+
+			else if (!InflectionPointL.InflectionPointFlag&&InflectionPointR.InflectionPointFlag)//偏右
+			{
+				LoopExit.RightNearExit = 1;//标记找到右边近处
+			}
+
+			else if (!InflectionPointL.InflectionPointFlag&&InflectionPointR.InflectionPointFlag)//偏左
+			{
+				LoopExit.LeftNearExit = 1;//标记找到左边近处
+			}
+
+			else  //如果前面都没有一个明确的方向，就默认左边
+			{
+				LoopExit.RightNearExit = 1;//标记找到左边近处
+			}
 		}
 
 		//获取最终的出口方向控制信号，只成功获取1次即可，然后直到控制标志位被清掉
@@ -1147,20 +1157,56 @@ void RecognitionObstacle(void)
 	ObstacleRightRowNum = 0;
 	//ObstacleLfetOkFlag=0;
 
-	if (IsStartLine)
-		return;
+	//if (IsStartLine)
+	//	return;
 
 	if (ABS(Error) <= 6 && LeftLose < 4 && RightLose <= 4 && AllLose < 2 && !LoopExit.LeftControlExit && (!LoopExit.RightControlExit) && (!Cross.RightSideling) && (!Cross.LeftSideling))
 	{
-		IsStartLine = 0;
+		//IsStartLine = 0;
 		for (i = 58; i > 20; i--)
 		{
 			/// 判断起跑线 ///
-			if (BlackAreaCountRow[i] || IsStartLine)
+			if (!IsStartLine)
+			{ // 无起跑线标志
+				if (BlackAreaCountRow[i])
+				{
+					IsStartLine = 1;
+					continue;
+				}
+			}
+			else
+			{ // 起跑线标志
+				if (!StartLineStart)
+				{ // 该帧无起跑线
+					IsStartLine = 2; // 延时处理
+				}
+				else if (BlackAreaCountRow[i - 1] || BlackAreaCountRow[i + 1])
+				{ // 前一行或后一行有起跑线
+					continue;
+				}
+				else if (IsStartLine == 2)
+				{
+					if (!ObstacleLeftFlag)
+					{  // 在起跑线结束且无障碍物标志时再重置
+						ScanColStartLeft = 0;
+						ScanColEndLeft = 0;
+						ObstacleLeftFlag = 0;
+						ObstacleLeftLFlag = 0;
+						ObstacleLfetRowStart = 0;
+						ObstacleLfetColStart = 0;
+						ObstacleLfetRowNum = 0;
+						ObstacleLfetNum = 0;
+						ObstacleLfetOkFlag = 0;
+					}
+					IsStartLine = 0;
+				}
+			}
+			
+			/*if (BlackAreaCountRow[i] || IsStartLine)
 			{
 				IsStartLine = 1;
 				continue;
-			}
+			}*/
 			/*else if(IsStartLine)
 			{
 				// 在起跑线结束时重置障碍物标志
@@ -1274,11 +1320,46 @@ void RecognitionObstacle(void)
 			for (i = 58; i > 20; i--)
 			{
 				/// 判断起跑线 ///
-				if (BlackAreaCountRow[i] || IsStartLine)
+				if (!IsStartLine)
+				{ // 无起跑线标志
+					if (BlackAreaCountRow[i])
+					{
+						IsStartLine = 1;
+						continue;
+					}
+				}
+				else
+				{ // 起跑线标志
+					if (!StartLineStart)
+					{ // 该帧无起跑线
+						IsStartLine = 2; // 延时处理
+					}
+					else if (BlackAreaCountRow[i - 1] || BlackAreaCountRow[i + 1])
+					{ // 前一行或后一行有起跑线
+						continue;
+					}
+					else if (IsStartLine == 2)
+					{
+						// 连续两帧无起跑线
+						if (!ObstacleRightFlag)
+						{  // 在起跑线结束且无障碍物标志时再重置
+							ScanColStartRight = 0;
+							ScanColEndRight = 0;
+							ObstacleRightFlag = 0;
+							ObstacleRightRFlag = 0;
+							ObstacleRightRowStart = 0;
+							ObstacleRightColStart = 0;
+							ObstacleRightRowNum = 0;
+							ObstacleRightOkFlag = 0;
+						}
+						IsStartLine = 0;
+					}
+				}
+				/*if (BlackAreaCountRow[i] || IsStartLine)
 				{
 					IsStartLine = 1;
 					continue;
-				}
+				}*/
 				/*else if (IsStartLine)
 				{
 					// 在起跑线结束时重置障碍物标志

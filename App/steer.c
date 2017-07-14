@@ -154,11 +154,10 @@ void CalculateError(void)
 	}
 	else
 	{
+		int LastLineFix = LastLine;
 		if (Loop.StrightIntoLoop && LastLine < (int)LastLineMaxInLoop)
-		{
-			LastLine = (int)LastLineMaxInLoop;
-		}
-		for (i = 57; i > LastLine; i--)
+			LastLineFix = (int)LastLineMaxInLoop;
+		for (i = 57; i > LastLineFix; i--)
 
 		{
 			CenterSum += MiddleLine[i] * Weight[i];
